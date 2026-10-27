@@ -1,0 +1,16 @@
+services:
+  jenkins:
+    build: .
+    container_name: jenkins
+    restart: unless-stopped
+    # root nécessaire pour accéder au socket Docker (usage local uniquement)
+    user: root
+    ports:
+      - "8081:8080"     # 8080 est déjà pris par votre backend
+      - "50000:50000"   # port des agents Jenkins
+    volumes:
+      - jenkins-home:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock
+
+volumes:
+  jenkins-home:
